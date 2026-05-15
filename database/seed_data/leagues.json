@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Winner League",
+    "country": "Israel",
+    "team_count": 12,
+    "regular_games": 22,
+    "playoff_teams": 8,
+    "foreign_limit": 5
+  }
+]

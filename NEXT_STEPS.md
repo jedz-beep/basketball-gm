@@ -1,90 +1,58 @@
 # NEXT_STEPS.md — What to Build Next Session
 
-## ⚠️ IMPORTANT: Complete GAME_DESIGN.md detail session FIRST
+## Session 2 Objective: Match Simulation + Season Management
 
-Before writing any code, the game design document needs to be finalized.
-The user needs to review and expand GAME_DESIGN.md with all their specific ideas.
-
-**Required before coding:** Full design conversation with the user covering:
-- Specific leagues they want (Israeli basketball? European leagues?)
-- Player attribute detail preferences  
-- Any specific mechanics they want
-- Visual style preferences
-
----
-
-## Session 1 Objective: Project Foundation
-
-*Start this ONLY after GAME_DESIGN.md is finalized with the user.*
+Phase 1 (Foundation) is complete. Session 2 builds the systems layer.
 
 ### Tasks (in this exact order)
 
-**Step 1 — Python project setup**
-- Create `requirements.txt` with pygame dependency
-- Create `config.py` with all constants (screen size, colors, frame rate)
-- Create `main.py` as the entry point (just opens a window for now)
-- Test: `python main.py` opens a blank game window
+**Step 1 — Season skeleton**
+- Create `systems/season.py`:
+  - `create_season(league_id, year)` — insert a row into `seasons`
+  - `generate_schedule(season_id)` — double round-robin: 12 teams × 22 games each, written to `matches`
+  - `advance_day(season_id)` — increment `current_day`; if a match scheduled for that day exists, simulate it
+- Phase transitions: preseason → regular → playoffs → offseason (just the state for now)
 
-**Step 2 — Database schema**
-- Create `database/schema.sql` with these tables:
-  - `players` (id, name, age, position, all attributes)
-  - `teams` (id, name, city, budget, attributes)
-  - `coaches` (id, name, role, attributes, team_id)
-  - `contracts` (id, player_id, team_id, salary, length, years_remaining)
-  - `seasons` (id, year, current_day, phase)
-  - `matches` (id, season_id, home_team_id, away_team_id, result, played)
-- Create `database/db.py` with helper functions: connect(), create_tables(), query()
+**Step 2 — Match simulation engine**
+- Create `systems/simulation.py`:
+  - `simulate_match(home_team_id, away_team_id) -> (home_score, away_score)`
+  - Pull each team's top-8 players by overall, weight by minutes (starters more)
+  - Team rating = weighted average of relevant attributes (offense rating + defense rating)
+  - Use home-court advantage (~+3 rating)
+  - Score generated from rating differential + base of ~80 pts + noise
+- Persist result back to `matches` (home_score, away_score, played=1)
+- Keep the engine deterministic when given a seed (for testing)
 
-**Step 3 — Data models**
-- Create `models/player.py` — Player class with all attributes from GAME_DESIGN.md
-- Create `models/team.py` — Team class
-- Create `models/coach.py` — Coach class
-- Create `models/contract.py` — Contract class
-- Create `models/league.py` — League and Season classes
+**Step 3 — Standings**
+- Create `systems/standings.py` (or fold into season.py):
+  - `compute_standings(season_id)` — wins, losses, win%, point diff
+  - Sorted list of teams
 
-**Step 4 — Seed data**
-- Create `database/seed_data/players.json` with 200 fictional players
-- Create `database/seed_data/teams.json` with 12 fictional teams
-- Create `database/seed_data/leagues.json` with one league configuration
+**Step 4 — Test in main.py**
+- Replace the current integration print with:
+  - Create a season for the seeded league
+  - Generate full schedule
+  - Loop: advance_day until phase = offseason
+  - Print final standings: rank | team | W-L | win% | pt diff
 
-**Step 5 — Test it**
-- Write a small test in main.py:
-  - Load seed data into database
-  - Read back all players from database
-  - Print: team name, roster size, total salary
-- If this works → Session 1 is complete
+### Definition of Done for Session 2
+- [ ] `python main.py --no-window --simulate-season` runs end-to-end
+- [ ] All 132 league games played (12 teams × 22 ÷ 2 doubled = 132 game rows)
+- [ ] Standings table printed with no team having impossible stats (W+L = 22 for everyone)
+- [ ] Top-prestige teams (Tel Aviv Lions, Jerusalem Stars) finish above average
 
-### Definition of Done for Session 1
-- [ ] `python main.py` runs without errors
-- [ ] A game window opens (even if blank)
-- [ ] Database is created with correct tables
-- [ ] 200 fictional players are in the database
-- [ ] 12 teams are in the database
-- [ ] Can read and print full roster of any team
-
-### Do NOT build in Session 1
-- Any UI screens (not yet)
-- Match simulation (not yet)
-- Transfer system (not yet)
-- Save/load system (not yet)
-
-One step at a time. Foundation first.
+### Do NOT build in Session 2
+- Playoffs bracket (Session 2.5 or 3)
+- UI (Session 3)
+- Transfers, finance, scouting (later)
+- Save/load (Phase 4)
 
 ---
 
-## Session 2 (planned — after Session 1 is done)
+## Session 3 (planned)
 
-Goal: Match simulation engine + Season management
-- `systems/simulation.py` — Calculate match result
-- `systems/season.py` — Generate schedule, advance calendar
-- Test: Simulate a full season for all teams, print final standings
+UI foundation: theme, components (button/table/card), main menu, dashboard, roster screen.
 
----
+## Session 4 (planned)
 
-## Session 3 (planned — after Session 2 is done)
-
-Goal: First UI screens
-- `ui/theme.py` — Design system
-- `ui/components/` — Button, Table, Card
-- `ui/screens/main_menu.py` — New game / Load game
-- `ui/screens/team_screen.py` — Roster view
+Transfer market + contract negotiation + finance system.

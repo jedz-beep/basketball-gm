@@ -11,7 +11,7 @@ It tells you (Claude) exactly where we are, what the rules are, and what to do t
 **Name:** Basketball GM — European Edition
 **Type:** PC desktop game (Python + Pygame)
 **Goal:** Deep European basketball General Manager simulation
-**Current Phase:** [FILL IN — e.g. "Phase 1: Foundation" / "Phase 2: Core Systems"]
+**Current Phase:** Phase 2: Core Systems (Phase 1 Foundation complete)
 
 **Key files:**
 - `GAME_DESIGN.md` — Full game design. The permanent source of truth. NEVER edit it.
@@ -100,8 +100,8 @@ The new session will read these files and know exactly what to do.
 
 ## CURRENT STATUS
 
-**Overall Progress:** Design Complete — Ready to code
-**Phase:** Pre-development (architecture + full game design locked)
+**Overall Progress:** Phase 1 Foundation complete — DB seeded with 200 players, 12 teams
+**Phase:** Phase 2 (Core Systems) — match simulation + season management next
 
 ---
 
@@ -128,12 +128,24 @@ The new session will read these files and know exactly what to do.
 
 ```
 Date: 2026-05-15
-Session #: 0
-What was built: Full project architecture + complete game design document
-Files created/changed: CLAUDE.md, GAME_DESIGN.md (v2.0), ARCHITECTURE.md, 
-                       PROGRESS.md, NEXT_STEPS.md
-Current game state: No code written yet — design phase complete
-Notes: All major design decisions locked. Ready to begin coding next session.
+Session #: 1
+What was built: Phase 1 Foundation — project scaffolding, SQLite schema, all
+                data models, deterministic seed loader. Integration test passes.
+Files created/changed: requirements.txt, config.py, main.py, .gitignore,
+                       database/{__init__,db,schema.sql}.py,
+                       database/seed_data/{leagues,teams,name_pools}.json,
+                       models/{__init__,player,team,coach,contract,league}.py,
+                       systems/{__init__,bootstrap}.py,
+                       PROGRESS.md, NEXT_STEPS.md, CLAUDE.md
+Current game state: DB seeded with 1 league + 12 teams + 200 players + 168
+                    contracts + 12 head coaches + 32 free agents.
+Design decisions locked this session:
+  - MVP league: Winner League (Israel), 12 teams, 22 regular games, 5 foreign cap
+  - 29 player attributes (1-20): 11 technical, 5 physical, 5 mental, 5 hidden, 3 personality
+  - Roster size: 14 (config.ROSTER_MAX_SIZE)
+  - Determinism: config.SEED_RANDOM seeds player generation
+Notes: pygame opens a placeholder window on `python main.py`. Use
+       `python main.py --no-window` for headless verification.
 ```
 
 ---
@@ -142,8 +154,9 @@ Notes: All major design decisions locked. Ready to begin coding next session.
 
 → See NEXT_STEPS.md for full task list
 
-**Short version:** Set up the Python project, create the database schema, 
-build the Player and Team models. Start with foundation only — no UI yet.
+**Short version:** Build `systems/season.py` (schedule + advance day) and
+`systems/simulation.py` (match engine). Test by simulating a full regular
+season and printing the standings.
 
 ---
 
@@ -158,7 +171,7 @@ None yet.
 | # | Date | Summary | Completed |
 |---|------|---------|-----------|
 | 0 | Setup | Architecture documents created | ✅ |
-| 1 | — | Project setup + models | ⬜ |
+| 1 | 2026-05-15 | Project setup + DB + models + seed data | ✅ |
 | 2 | — | Systems: simulation + season | ⬜ |
 | 3 | — | UI: main screens | ⬜ |
 | 4 | — | Integration + save system | ⬜ |

@@ -1,0 +1,6 @@
+{
+  "israeli_first": ["Yotam", "Omri", "Itay", "Avi", "Guy", "Tomer", "Amit", "Roy", "Eitan", "Daniel", "Or", "Noam", "Yaniv", "Gal", "Lior", "Idan", "Eyal", "Nadav", "Tal", "Ido", "Ofek", "Yam", "Aviv", "Shai", "Bar", "Liran", "Doron", "Asaf", "Rami", "Uri"],
+  "israeli_last": ["Cohen", "Levi", "Mizrahi", "Peretz", "Biton", "Dahan", "Avraham", "Friedman", "Shapira", "Ben-David", "Azulay", "Hadad", "Gabay", "Malka", "Yosef", "Amar", "Sasson", "Tal", "Eliyahu", "Halevy", "Bar-On", "Goldberg", "Weiss", "Rosen", "Stern", "Katz", "Segal", "Lev", "Tzur", "Ariel"],
+  "foreign_first": ["Marcus", "Jordan", "Tyler", "Devin", "Anthony", "Jamal", "Chris", "Andre", "Damian", "Trevor", "Luka", "Goran", "Nikola", "Bogdan", "Vassilis", "Kostas", "Nando", "Sergio", "Rudy", "Pau", "Tomas", "Jonas", "Mantas", "Dario", "Filip", "Nemanja", "Vlatko", "Sasha", "Milos", "Alperen"],
+  "foreign_last": ["Williams", "Johnson", "Brown", "Jones", "Davis", "Miller", "Wilson", "Moore", "Thompson", "Anderson", "Doncic", "Jokic", "Antetokounmpo", "Spanoulis", "Mirotic", "Rubio", "Gasol", "Fernandez", "Sloukas", "Sengun", "Calathes", "Bogdanovic", "Teodosic", "Vesely", "Hezonja", "Micic", "Vezenkov", "Lessort", "Larkin", "Hackett"]
+}

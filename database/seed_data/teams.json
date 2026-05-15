@@ -1,0 +1,14 @@
+[
+  {"name": "Tel Aviv Lions",       "city": "Tel Aviv",     "abbreviation": "TAL", "budget": 8000000, "prestige": 18, "fan_loyalty": 17, "arena_capacity": 11000},
+  {"name": "Jerusalem Stars",      "city": "Jerusalem",    "abbreviation": "JRS", "budget": 6500000, "prestige": 16, "fan_loyalty": 18, "arena_capacity": 11600},
+  {"name": "Haifa Sailors",        "city": "Haifa",        "abbreviation": "HAI", "budget": 4500000, "prestige": 13, "fan_loyalty": 14, "arena_capacity": 5000},
+  {"name": "Beersheba Hawks",      "city": "Beersheba",    "abbreviation": "BSH", "budget": 3200000, "prestige": 10, "fan_loyalty": 12, "arena_capacity": 4200},
+  {"name": "Netanya Coast",        "city": "Netanya",      "abbreviation": "NTC", "budget": 3000000, "prestige": 9,  "fan_loyalty": 11, "arena_capacity": 3500},
+  {"name": "Rishon Tigers",        "city": "Rishon LeZion","abbreviation": "RIS", "budget": 4000000, "prestige": 12, "fan_loyalty": 13, "arena_capacity": 4500},
+  {"name": "Petah Tikva Eagles",   "city": "Petah Tikva",  "abbreviation": "PTE", "budget": 3500000, "prestige": 11, "fan_loyalty": 12, "arena_capacity": 3800},
+  {"name": "Ashdod Storm",         "city": "Ashdod",       "abbreviation": "ASH", "budget": 3300000, "prestige": 10, "fan_loyalty": 13, "arena_capacity": 4000},
+  {"name": "Ramat Gan Royals",     "city": "Ramat Gan",    "abbreviation": "RGR", "budget": 3800000, "prestige": 11, "fan_loyalty": 11, "arena_capacity": 3600},
+  {"name": "Holon Falcons",        "city": "Holon",        "abbreviation": "HOL", "budget": 4200000, "prestige": 13, "fan_loyalty": 14, "arena_capacity": 5500},
+  {"name": "Galilee Wolves",       "city": "Nazareth",     "abbreviation": "GAL", "budget": 2800000, "prestige": 8,  "fan_loyalty": 15, "arena_capacity": 3000},
+  {"name": "Eilat Reef",           "city": "Eilat",        "abbreviation": "EIL", "budget": 2500000, "prestige": 7,  "fan_loyalty": 10, "arena_capacity": 2800}
+]
