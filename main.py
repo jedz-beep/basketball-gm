@@ -1,8 +1,8 @@
 """Entry point. Opens the game window and runs an integration test on startup.
 
-The integration test (Session 1 Step 5) seeds the database if empty, then reads
-back team rosters and prints a summary to stdout. After that, a blank game
-window is opened so we can verify pygame works end-to-end.
+Flags:
+  --no-window         Skip opening the pygame window (CI / headless runs).
+  --simulate-season   Run a full regular season and print final standings.
 """
 
 import sys
@@ -12,7 +12,7 @@ import pygame
 
 import config
 from database import db
-from systems import bootstrap
+from systems import bootstrap, season
 
 
 def run_integration_test() -> None:
@@ -38,7 +38,48 @@ def run_integration_test() -> None:
             (team_id, team_id),
         )
         total_salary, roster = rows[0]
-        print(f"{name:<28} {city:<18} {roster:>6} {int(total_salary):>13,}€")
+        print(f"{name:<28} {city:<18} {roster:>6} {int(total_salary):>13,}")
+    print()
+
+
+def simulate_full_season() -> None:
+    """Create a season, generate the schedule, play every game, print standings."""
+    league_id = db.query("SELECT id FROM leagues LIMIT 1")[0][0]
+    year = 2026
+
+    existing = db.query(
+        "SELECT id FROM seasons WHERE league_id = ? AND year = ?", (league_id, year)
+    )
+    if existing:
+        season_id = existing[0][0]
+        print(f"Season {year} already exists (id={season_id}). Re-using.")
+    else:
+        season_id = season.create_season(league_id, year)
+        n = season.generate_schedule(season_id)
+        print(f"Generated schedule: {n} matches.")
+
+    last_day = season.last_scheduled_day(season_id)
+    print(f"Simulating regular season ({last_day} days)...")
+    while not season.is_regular_season_complete(season_id):
+        season.advance_day(season_id, rng_seed=config.SEED_RANDOM)
+    season.end_regular_season(season_id)
+
+    standings = season.compute_standings(season_id)
+    _print_standings(standings, year)
+
+
+def _print_standings(standings: list[dict], year: int) -> None:
+    """Render the final regular-season standings to stdout."""
+    print(f"\nFinal Standings — Winner League {year}")
+    print(f"{'#':>2}  {'Team':<24} {'Abbr':<5} {'W':>3} {'L':>3} "
+          f"{'PCT':>6} {'PF':>5} {'PA':>5} {'DIFF':>6}")
+    print("-" * 70)
+    for rank, row in enumerate(standings, start=1):
+        print(
+            f"{rank:>2}  {row['name']:<24} {row['abbreviation']:<5} "
+            f"{row['wins']:>3} {row['losses']:>3} {row['win_pct']:>6.3f} "
+            f"{row['pf']:>5} {row['pa']:>5} {row['diff']:>+6}"
+        )
     print()
 
 
@@ -69,9 +110,11 @@ def open_window() -> None:
 
 
 def main() -> int:
-    """Run the Session 1 integration test, then open the placeholder window."""
+    """Run integration test, optionally simulate a season, then open the window."""
     Path(config.SAVES_DIR).mkdir(exist_ok=True)
     run_integration_test()
+    if "--simulate-season" in sys.argv:
+        simulate_full_season()
     if "--no-window" not in sys.argv:
         open_window()
     return 0

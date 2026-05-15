@@ -100,8 +100,8 @@ The new session will read these files and know exactly what to do.
 
 ## CURRENT STATUS
 
-**Overall Progress:** Phase 1 Foundation complete — DB seeded with 200 players, 12 teams
-**Phase:** Phase 2 (Core Systems) — match simulation + season management next
+**Overall Progress:** Phase 2 partial — Season + Match engine working. UI is next.
+**Phase:** Phase 3 (UI screens) — start with theme + components + main menu + dashboard
 
 ---
 
@@ -125,6 +125,20 @@ The new session will read these files and know exactly what to do.
 ---
 
 ## LAST SESSION SUMMARY
+
+```
+Date: 2026-05-15
+Session #: 2
+What was built: Season manager (double round-robin schedule + advance_day +
+                standings) and stats-based match simulation engine. Full season
+                simulation works end-to-end.
+Files created/changed: systems/season.py, systems/simulation.py, main.py
+                       (added --simulate-season), PROGRESS.md, NEXT_STEPS.md, CLAUDE.md.
+Verified: 132 matches play, every team W+L=22, Tel Aviv Lions finish 1st with
+          16-6, average 11.0 wins. Top-prestige clubs beat the average.
+Bug fixed this session: create_season starts current_day at 0 (was 1) so the
+          first advance_day plays day-1 matches.
+```
 
 ```
 Date: 2026-05-15
@@ -154,9 +168,9 @@ Notes: pygame opens a placeholder window on `python main.py`. Use
 
 → See NEXT_STEPS.md for full task list
 
-**Short version:** Build `systems/season.py` (schedule + advance day) and
-`systems/simulation.py` (match engine). Test by simulating a full regular
-season and printing the standings.
+**Short version:** Build the UI foundation — `ui/theme.py`, basic components
+(button, table, card), screen manager (`ui/app.py`), and the first four screens
+(main menu, dashboard, team, league). See NEXT_STEPS.md for the ordered task list.
 
 ---
 
@@ -172,7 +186,7 @@ None yet.
 |---|------|---------|-----------|
 | 0 | Setup | Architecture documents created | ✅ |
 | 1 | 2026-05-15 | Project setup + DB + models + seed data | ✅ |
-| 2 | — | Systems: simulation + season | ⬜ |
+| 2 | 2026-05-15 | Season manager + match simulation engine | ✅ |
 | 3 | — | UI: main screens | ⬜ |
 | 4 | — | Integration + save system | ⬜ |
 
